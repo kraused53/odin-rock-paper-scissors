@@ -1,180 +1,49 @@
-<!doctype html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8" />
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Rock, Paper, Scissors!</title>
+        <link rel="stylesheet" href="./style.css">
+        <script src="./scripts.js" defer></script>
+    </head>
 
-    <title>Number guessing game</title>
-
-    <style>
-        .board {
-            width: 50vw;
-            min-height: 50vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
-            background-color:cornflowerblue;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-
-        .row {
-            width: 75%;
-            min-height: 40px;
-            padding: 20px 0;
-            margin: 20px 0;
-            background-color: antiquewhite;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-        }
-
-        .scoreWindow {
-            display: flex;
-            margin: 20px 0;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-            background-color: whitesmoke;
-            height: 100%;
-            padding: 20px 20px;
-        }
-
-        #result {
-            min-width: 50%;
-        }
-    </style>
-  </head>
-
-  <body>
-    
-
-    <div class="board">
-        <div class="row">
-            <h1 id="title">Rock, Paper, Scissors!</h1>
+    <body>
+        <div id="header">
+            <h1>Rock, Paper, Scissors!</h1>
         </div>
-        <div class="row">
-            <div class="scoreWindow">
-                <div id="playerScore">
-                    0
-                </div>
-                <div class="scoreLabel">
-                    Player Score
+        <div id="gameContainer">
+            <div class="row" id="playerRow">
+                <h3 id="playerHero">Choose Your Fighter!</h3>
+                <div id="playerChoiceContainer">
+                    <button class="choice" id="rockChoice">R</button>
+                    <button class="choice" id="paperChoice">P</button>
+                    <button class="choice" id="scissorsChoice">S</button>
                 </div>
             </div>
-            <div class="scoreWindow">
-                <div id="computerScore">
-                    0
+            <div class="row" id="gameRow">
+                <div class="choice" id="computerChoiceContainer">
+                    <div id="computerChoice">
+                        ?
+                    </div>
+                    <h3 id="computerHero">Computer Choice</h3>
                 </div>
-                <div class="scoreLabelWindow">
-                    Computer Score
+                <div id="resultWindow">
+                    Choose a fighter to play!
+                </div>
+            </div>
+            <div class="row" id="resultsRow">
+                <div class="scoreWindow">
+                    <div class="score" id="playerScore">0</div>
+                    <div class="scoreHero">Player Score</div>
+                </div>
+                <div class="scoreWindow">
+                    <div class="score" id="computerScore">0</div>
+                    <div class="scoreHero">Computer Score</div>
                 </div>
             </div>
         </div>
-        <div class="row">
-                <div class="scoreWindow" id="result">
-                    Click below to play!
-                </div>
+        <div id="footer">
+            <p>Thanks for playing!</p>
         </div>
-        <div class="row">
-            <button type="button" id="playButton">
-                Play Rock, Paper, Scissors!
-            </button>
-        </div>
-    </div>
-
-    <script>
-        
-        const button = document.getElementById("playButton");
-        button.addEventListener("click", playRPC);
-
-        const resulttext = document.getElementById("result");
-        const playerScore = document.getElementById("playerScore");
-        const computerScore = document.getElementById("computerScore");
-
-        function playRPC() {
-            function getHumanChoice() {
-                let answer = prompt("Please enter your choice [rock, paper, or scissors]: ");
-
-                while(true) {
-                    let sanitized = answer.toLocaleLowerCase();
-                    
-                    if(sanitized === "rock" || sanitized === "paper" || sanitized === "scissors") {
-                        return sanitized;
-                    }
-                    
-                    answer = prompt(answer + " is not valid, please try again [rock, paper, or scissors]: ");
-                    answer.toLocaleLowerCase();
-                }
-                
-                return answer;
-            }
-
-            function getComputerChoice() {
-                switch(Math.floor( ( Math.random() * 3 ) + 1 )) {
-                    case 1: return "rock";
-                    case 2: return "paper";
-                    case 3: return "scissors";
-                    default: return "getComputerChoice: error";
-                }
-            }
-
-            function playRound(hc, cc) {
-                if(hc === cc) {
-                    return "tie";
-                }
-
-                // Check hc === "rock"
-                if(hc === "rock") {
-                    if(cc === "paper") {
-                        return "computer";
-                    }else {
-                        return "human";
-                    }
-                }
-
-                // Check hc === "paper"
-                if(hc === "paper") {
-                    if(cc === "scissors") {
-                        return "computer";
-                    }else {
-                        return "human";
-                    }
-                }
-                
-                // Check hc === "scissors"
-                if(hc === "scissors") {
-                    if(cc === "rock") {
-                        return "computer";
-                    }else {
-                        return "human";
-                    }
-                }
-                return "playRound: error"
-            }
-            
-            
-            humanChoice = getHumanChoice();
-            computerChoice = getComputerChoice();
-            winner = playRound(humanChoice, computerChoice)
-            console.log("Human: "+humanChoice);
-            console.log("Computer: "+computerChoice);
-            
-            switch(winner) {
-                case "tie": 
-                    result.textContent = "It's a tie!"; 
-                    break;
-                case "computer": 
-                    result.textContent = "The computer won. You'll get them next time!";
-                    computerScore.textContent = parseInt(computerScore.textContent) + 1;
-                    break;
-                case "human": 
-                    result.textContent = "You did it! You beat the machine!"; 
-                    playerScore.textContent = parseInt(playerScore.textContent) + 1;
-                    break;
-                default: result.textContent = "parseWinner: error"; break;
-            }
-        }
-    </script>
-  </body>
+    </body>
 </html>
